@@ -34,6 +34,8 @@ func main() {
 	fmt.Printf("Created Consumer %v\n", c)
 	err = c.Subscribe(topic, nil)
 	run := true
+	counter := 0
+	commitAfter := 1000
 	for run == true {
 		select {
 		case sig := <-sigchan:
@@ -47,7 +49,12 @@ func main() {
 				c.Unassign()
 			case *kafka.Message:
 				fmt.Printf("%% Message on %s: %s\n", e.TopicPartition, string(e.Value))
-				c.Commit()
+				counter++
+				if counter > commitAfter {
+					c.Commit()
+					counter = 0
+				}
+
 			case kafka.PartitionEOF:
 				fmt.Printf("%% Reached %v\n", e)
 			case kafka.Error:
