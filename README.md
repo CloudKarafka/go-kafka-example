@@ -16,6 +16,9 @@ Configuration
   Password can be found in the Details view in for your CloudKarafka instance.
 * `export CLOUDKARAFKA_TOPIC_PREFIX="same_as_username"`
   Topic prefix should be the same as your username.
+* `export CLOUDKARAFKA_GROUPID="group_id"`
+  Group ID can be anything consumers can join a group by using the same.
+
 
 These export commands must be run in both of the terminal windows below.
 
